@@ -88,10 +88,12 @@ class ClockifyApi {
         var _response = [];
 
         ajaxResponse.forEach(element => {
-            _response.push({
-                "id": element["id"],
-                "name": element["name"]
-            })
+            if(element["archived"] == false) {
+                _response.push({
+                    "id": element["id"],
+                    "name": element["name"]
+                })
+            }
         });
 
         return _response;
