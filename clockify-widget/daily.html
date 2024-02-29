@@ -50,6 +50,7 @@
 
             // Get first and last dates of current week
             var _first_day = HelperFunctions.getFirstDateOfCurrentWeek();
+            var _last_day = HelperFunctions.addDays(_first_day, 7);;
 
             // Append week entries to table
             var _body = "<tbody>";
@@ -79,7 +80,20 @@
 
                 _body += `<th class="day-total">${entries["totalTime"]}</th></tr>`;
             }
-            _body += "</tbody>";
+
+            // Totals for each project
+            _body += `<tr><th class="project-total">[total]</th>`;
+            var entries = clockifyApi.getReport(HelperFunctions.getFirstTimeOfDateISO(_first_day), HelperFunctions.getLastTimeOfDateISO(_last_day));
+            projects.forEach(proj => {
+                    _entry = entries["projects"].find(k => k.id === proj["id"])
+                    if (_entry) {
+                        _body += `<td>${_entry["totalTime"]}</td>`;
+                    } else {
+                        _body += `<td>-</td>`;
+                    }
+                });
+
+            _body += "</tr></tbody>";
             content.append(_body)
 
             // Today Work
