@@ -19,7 +19,7 @@ function countdown() {
     if (!isPaused && timeLeft > 0) {
         timeLeft--;
         updateDisplay();
-        if (timeLeft === 0) {
+        if (timeLeft === 3) {
             alarmSound.play();
         }
     }
